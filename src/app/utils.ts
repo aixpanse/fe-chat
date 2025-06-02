@@ -1,6 +1,6 @@
 import { Message, Order, UserMessage } from "./types";
 
-const baseUrl = "http://57.128.223.2:8080";
+const baseUrl = "/api/rag_app";
 
 export const verifyStoredThreadId = async (id: string) => {
   const name = `threadId-${id}`;
@@ -70,7 +70,7 @@ export const postMessage = async (message: string, id: string) => {
 //   localStorage.setItem(name, "");
 // }
 
-const storeSreviceUrl = "http://57.128.223.2:8000"
+const storeSreviceUrl = "/api/rag_store"
 
 export async function getOrders(): Promise<Order[]> {
   const url = `${storeSreviceUrl}/orders`;
