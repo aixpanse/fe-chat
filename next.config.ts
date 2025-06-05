@@ -5,11 +5,11 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/rag_store/:path*',
-        destination: 'http://57.128.223.2:8000/:path*', // Proxy to external URL
+        destination: 'http://57.128.223.2:8080/:path*', // Proxy to external URL
       },
       {
         source: '/api/rag_app/:path*',
-        destination: 'http://57.128.223.2:8080/:path*', // Proxy to external URL
+        destination: 'http://57.128.223.2:8000/:path*', // Proxy to external URL
       },
     ];
   },
