@@ -82,7 +82,7 @@ export function ChatBar({
       <LoginIcon
         isLoggedIn={isLoggedIn}
         onClick={() => {
-          onLoginClick(isLoggedIn)
+          onLoginClick(!isLoggedIn)
           setIsLoggedIn(!isLoggedIn)
         }}
       />
