@@ -50,12 +50,12 @@ export const getMessages = async (id: string) => {
 export const isAiOrHuman = (m: Message) =>
   m.content && ["ai", "human"].includes(m.type);
 
-export const postMessage = async (message: string, id: string) => {
+export const postMessage = async (message: string, id: string, isOwner: boolean) => {
   const threadId = await getThreadId(id);
   const url = `${baseUrl}/threads/${threadId}/runs/stream`;
   const payload = JSON.stringify({
     stream_mode: ["messages"],
-    input: { messages: [{ content: message, type: "human" }] },
+    input: { messages: [{ content: message, type: "human" }], is_owner: isOwner },
     assistant_id: "simple",
   });
   const options = { method: "POST", body: payload };

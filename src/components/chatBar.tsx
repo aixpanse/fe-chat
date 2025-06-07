@@ -13,8 +13,10 @@ import { Order, UserMessage } from "@/app/types";
 
 export function ChatBar({
   onOrdersClick,
+  onLoginClick,
 }: {
   onOrdersClick: (newOrders: boolean) => Promise<void>;
+  onLoginClick: (isLoggedIn: boolean) => Promise<void>;
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -79,7 +81,10 @@ export function ChatBar({
     <div className="flex items-center justify-start h-full">
       <LoginIcon
         isLoggedIn={isLoggedIn}
-        onClick={() => setIsLoggedIn(!isLoggedIn)}
+        onClick={() => {
+          onLoginClick(isLoggedIn)
+          setIsLoggedIn(!isLoggedIn)
+        }}
       />
       {isLoggedIn && (
         <OrderIcon newOrder={!areOrdersRead()} onClick={handleOrderIconClick} />

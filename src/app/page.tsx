@@ -10,6 +10,7 @@ import { ChatBar } from "@/components/chatBar";
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ export default function Home() {
     scrollToBottom();
 
     try {
-      const stream = await postMessage(inputValue, "user");
+      const stream = await postMessage(inputValue, "user", isLogged);
       await streamAiResponse(stream);
     } catch (error) {
       console.error("Error sending message:", error);
@@ -122,7 +123,7 @@ export default function Home() {
     scrollToBottom();
 
     try {
-      const stream = await postMessage(message, "user");
+      const stream = await postMessage(message, "user", isLogged);
       await streamAiResponse(stream);
       scrollToBottom();
     } catch (error) {
@@ -130,10 +131,14 @@ export default function Home() {
     }
   };
 
+  const handleLoginClick = async (isLoggedIn: boolean) => {
+    setIsLogged(isLoggedIn);
+  };
+
   return (
     <div className="flex flex-col items-center justify-items-center w-full bg-gray-100">
       <div className="w-full h-15 shadow-lg shadow-gray-250">
-        <ChatBar onOrdersClick={handleOrdersClick} />
+        <ChatBar onOrdersClick={handleOrdersClick} onLoginClick={handleLoginClick} />
       </div>
       <div className="w-full h-120 p-4 flex flex-col overflow-y-auto overflow-x-hidden">
         {messages.map((m, i) =>
