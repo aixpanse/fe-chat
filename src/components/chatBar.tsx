@@ -13,9 +13,11 @@ import { Order, UserMessage } from "@/app/types";
 
 export function ChatBar({
   onOrdersClick,
+  onMessagesClick,
   onLoginClick,
 }: {
   onOrdersClick: (newOrders: boolean) => Promise<void>;
+  onMessagesClick: (newOrders: boolean) => Promise<void>;
   onLoginClick: (isLoggedIn: boolean) => Promise<void>;
 }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -73,6 +75,7 @@ export function ChatBar({
   };
 
   const handleMessageIconClick = async () => {
+    await onMessagesClick(!areMessagesRead());
     await markMessagesAsRead();
     await fetchMessages(isLoggedIn);
   };

@@ -131,6 +131,31 @@ export default function Home() {
     }
   };
 
+  const handleMessagesClick = async (newOrder: boolean) => {
+    const message = newOrder
+      ? "Pokaz tylko nowe wiadomosci"
+      : "Pokaz wszystkie wiadomosci";
+
+    setMessages([
+      ...messages,
+      {
+        type: "human",
+        content: message,
+      },
+      { type: "ai", content: "" },
+    ]);
+
+    scrollToBottom();
+
+    try {
+      const stream = await postMessage(message, "user", isLogged);
+      await streamAiResponse(stream);
+      scrollToBottom();
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
+
   const handleLoginClick = async (isLoggedIn: boolean) => {
     setIsLogged(isLoggedIn);
   };
@@ -138,7 +163,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-items-center w-full bg-gray-100">
       <div className="w-full h-15 shadow-lg shadow-gray-250">
-        <ChatBar onOrdersClick={handleOrdersClick} onLoginClick={handleLoginClick} />
+        <ChatBar onMessagesClick={handleMessagesClick} onOrdersClick={handleOrdersClick} onLoginClick={handleLoginClick} />
       </div>
       <div className="w-full h-120 p-4 flex flex-col overflow-y-auto overflow-x-hidden">
         {messages.map((m, i) =>
